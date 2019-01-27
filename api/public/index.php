@@ -2,14 +2,24 @@
 
 declare(strict_types=1);
 
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Credentials: *');
-header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Methods: GET,POST,PUT,DELETE,HEAD,OPTIONS');
-header('Access-Control-Allow-Headers: Origin,Content-Type,Accept,Authorization');
+use Api\Http\Action\HomeAction;
+use Api\Http\Middleware\CORSMiddleware;
 
-echo json_encode([
-	'name' => 'App Api',
-	'version' => '1.0'
-]);
+chdir(dirname(__DIR__));
+require 'vendor/autoload.php';
+
+$config = require 'config/config.php';
+
+$app = new \Slim\App($config);
+
+$container = $app->getContainer();
+
+$container['callableResolver'] = function ($container) {
+    return new \Bnf\Slim3Psr15\CallableResolver($container);
+};
+
+$app->get('/', HomeAction::class . ":handle");
+
+$app->add(CORSMiddleware::class);
+
+$app->run();
