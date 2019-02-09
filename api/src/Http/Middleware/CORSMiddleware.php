@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Http\Middleware;
 
@@ -15,7 +16,6 @@ class CORSMiddleware implements MiddlewareInterface
         $response = $response->handle($request);
 
         return $response
-            ->withHeader('Content-Type', 'application/json')
             ->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('Access-Control-Allow-Credentials', '*')
             ->withHeader('Access-Control-Allow-Credentials', 'true')

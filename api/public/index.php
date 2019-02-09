@@ -2,24 +2,25 @@
 
 declare(strict_types=1);
 
-use Api\Http\Action\HomeAction;
-use Api\Http\Middleware\CORSMiddleware;
+
+use Symfony\Component\Dotenv\Dotenv;
 
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
-$config = require 'config/config.php';
+if (file_exists('.env')) {
+    (new Dotenv())->load('.env');
+}
 
-$app = new \Slim\App($config);
+$container = require 'config/container.php';
+$app = new \Slim\App($container);
 
-$container = $app->getContainer();
+(require 'config/bootstrap.php')($container);
+(require 'config/routes.php')($app);
 
-$container['callableResolver'] = function ($container) {
-    return new \Bnf\Slim3Psr15\CallableResolver($container);
-};
-
-$app->get('/', HomeAction::class . ":handle");
-
-$app->add(CORSMiddleware::class);
+$middleware = require 'config/middleware.php';
+foreach ($middleware as $item) {
+    $app->add($item);
+}
 
 $app->run();
