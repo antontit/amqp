@@ -2,8 +2,15 @@
 
 declare(strict_types=1);
 
-use Slim\Container;
 
-$config = require 'config/config.php';
+use Zend\ConfigAggregator\ConfigAggregator;
+use Zend\ConfigAggregator\PhpFileProvider;
 
-return new Container($config);
+$aggregator = new ConfigAggregator([
+    new PhpFileProvider(__DIR__ . '/common/*.php'),
+    new PhpFileProvider(__DIR__ . '/' . (getenv('APP_ENV') ?: 'prod') . '/*.php'),
+]);
+
+$config = $aggregator->getMergedConfig();
+
+return new Slim\Container($config);

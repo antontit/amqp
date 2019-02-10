@@ -1,24 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
 use Doctrine\Common\Cache\FilesystemCache;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Setup;
 use Psr\Container\ContainerInterface;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 
 return [
-    'setting' => [
-        'displayErrorDetails' => (bool)getenv('API_DEBUG'),
-        'addContentLengthHeader' => false,
-        'determineRouteBeforeAppMiddleware' => true,
-    ],
-
-    'callableResolver' => function (ContainerInterface $container) {
-        return new \Bnf\Slim3Psr15\CallableResolver($container);
-    },
-
     EntityManagerInterface::class => function (ContainerInterface $container) {
         $params = $container['config']['doctrine'];
         $config = Setup::createAnnotationMetadataConfiguration(
@@ -38,7 +26,7 @@ return [
 
     'config' => [
         'doctrine' => [
-            'dev_mode' => true,
+            'dev_mode' => false,
             'cache_dir' => 'var/cache/doctrine',
             'metadata_dirs' => ['src/Model/User/Entity'],
             'connection' => [
