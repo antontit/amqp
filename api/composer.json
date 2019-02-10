@@ -9,15 +9,18 @@
     "phpunit/phpunit": "^8",
     "psr/http-server-handler": "^1.0",
     "psr/http-server-middleware": "^1.0",
+    "ramsey/uuid": "^3.8",
     "slim/slim": "^3.12",
     "symfony/dotenv": "^4.2",
+    "webmozart/assert": "^1.4",
     "zendframework/zend-diactoros": "^2.1"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master"
   },
   "scripts": {
-    "test": "./vendor/bin/phpunit --color=always tests"
+    "test-unit": "./vendor/bin/phpunit --color=always --configuration phpunit.xml.dist --testsuite=unit",
+    "test-feature": "./vendor/bin/phpunit --color=always --configuration phpunit.xml.dist --testsuite feature"
   },
   "autoload": {
     "psr-4": {
