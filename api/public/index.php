@@ -15,7 +15,6 @@ if (file_exists('.env')) {
 $container = require 'config/container.php';
 $app = new \Slim\App($container);
 
-(require 'config/bootstrap.php')($container);
 (require 'config/routes.php')($app);
 
 $middleware = require 'config/middleware.php';
