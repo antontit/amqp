@@ -21,4 +21,9 @@ class UserId
     {
         return new self(Uuid::uuid4()->toString());
     }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
 }

@@ -1,9 +1,12 @@
 <?php
 
+use Api\Infrastructure\Doctrine\Type\User\UserIdType;
+use Api\Infrastructure\Doctrine\Type\User\EmailType;
 use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 use Doctrine\ORM\EntityManager;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Tools\Setup;
 
 return [
@@ -18,6 +21,13 @@ return [
             ),
             false
         );
+
+        foreach ($params['types'] as $type => $class) {
+            if (!Type::hasType($type)) {
+                Type::addType($type, $class);
+            }
+        }
+
         return EntityManager::create(
             $params['connection'],
             $config
@@ -32,6 +42,10 @@ return [
             'connection' => [
                 'url' => getenv('API_DB_URL'),
             ],
+            'types' => [
+                UserIdType::NAME => UserIdType::class,
+                EmailType::NAME => EmailType::class,
+            ]
         ],
     ],
 ];
