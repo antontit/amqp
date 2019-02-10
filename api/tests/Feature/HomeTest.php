@@ -2,21 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Test\Unit\Http\Action;
+namespace Test\Feature;
 
-use PHPUnit\Framework\TestCase;
-
-use Api\Http\Action\HomeAction;
-use Zend\Diactoros\ServerRequest;
-
-
-class HomeActionTest extends TestCase
+class HomeTest extends WebTestCase
 {
     public function testSuccess()
     {
-        $action = new HomeAction();
-        $request = new ServerRequest();
-        $response = $action->handle($request);
+        $response = $this->get('/');
 
         self::assertEquals(200, $response->getStatusCode());
         self::assertJson($content = $response->getBody()->getContents());
@@ -28,6 +20,4 @@ class HomeActionTest extends TestCase
             'version' => '1.0'
         ], $data);
     }
-
-
 }
