@@ -6,6 +6,8 @@
     "php": ">=7.1.0",
     "ext-json": "^1.5",
     "bnf/slim3-psr15": "^1.0",
+    "doctrine/data-fixtures": "^1.3",
+    "doctrine/migrations": "^2.0",
     "doctrine/orm": "^2.6",
     "phpunit/phpunit": "^8",
     "psr/http-server-handler": "^1.0",

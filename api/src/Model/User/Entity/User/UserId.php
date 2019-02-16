@@ -26,4 +26,9 @@ class UserId
     {
         return $this->id;
     }
+
+    public function __toString(): string
+    {
+        return $this->id;
+    }
 }
