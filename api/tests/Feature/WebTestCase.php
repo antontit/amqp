@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Test\Feature;
 
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\ServerRequest;
+use Doctrine\ORM\EntityManagerInterface;
 use Zend\Diactoros\Response;
 use Slim\Http\Uri;
 use Slim\App;
@@ -47,5 +51,24 @@ class WebTestCase extends TestCase
     protected function container(): ContainerInterface
     {
         return require 'config/container.php';
+    }
+
+    protected function loadFixtures(array $fixtures): void
+    {
+        $container = $this->container();
+        $em = $container->get(EntityManagerInterface::class);
+        $loader = new Loader();
+
+        foreach ($fixtures as $class) {
+            if ($container->has($class)) {
+                $fixture = $container->get($class);
+            } else {
+                $fixture = new $class;
+            }
+            $loader->addFixture($fixture);
+        }
+
+        $executor = new ORMExecutor($em, new ORMPurger($em));
+        $executor->execute($loader->getFixtures());
     }
 }

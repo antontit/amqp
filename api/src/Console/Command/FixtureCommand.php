@@ -4,25 +4,41 @@ declare(strict_types=1);
 
 namespace Api\Console\Command;
 
-use Api\Model\User\Entity\User\ConfirmToken;
-use Api\Model\User\Entity\User\Email;
-use Api\Model\User\Entity\User\User;
-use Api\Model\User\Entity\User\UserId;
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-class FixtureCommand extends AbstractFixture
+class FixtureCommand extends Command
 {
-    public function load(ObjectManager $manager): void
+    private $em;
+    private $path;
+
+    public function __construct(EntityManagerInterface $em, string $path)
     {
-        $user = new User(
-            UserId::next(),
-            $now = new \DateTimeImmutable(),
-            new Email('user@app.dev'),
-            '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // 'secret'
-            new ConfirmToken('token', new \DateTimeImmutable('+1 day'))
-        );
-        $manager->persist($user);
-        $manager->flush();
+        parent::__construct();
+        $this->em = $em;
+        $this->path = $path;
+    }
+
+    protected function configure(): void
+    {
+        $this->setName('fixtures:load')->setDescription('Load fixtures');
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $output->writeln('<comment>Loading fixtures</comment>');
+        $loader = new Loader();
+        $loader->loadFromDirectory($this->path);
+        $executor = new ORMExecutor($this->em, new ORMPurger());
+        $executor->setLogger(function ($message) use ($output) {
+            $output->writeln($message);
+        });
+        $executor->execute($loader->getFixtures());
+        $output->writeln('<info>Done!</info>');
     }
 }
