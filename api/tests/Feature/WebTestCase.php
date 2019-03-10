@@ -7,22 +7,27 @@ namespace Test\Feature;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\ServerRequest;
-use Doctrine\ORM\EntityManagerInterface;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\Stream;
-use Slim\Http\Uri;
 use Slim\App;
+use Zend\Diactoros\Response;
+use Zend\Diactoros\ServerRequest;
+use Zend\Diactoros\Stream;
+use Zend\Diactoros\Uri;
 
 class WebTestCase extends TestCase
 {
-    protected function get(string $url)
+    protected function get(string $uri): ResponseInterface
     {
-        return $this->method($url, 'GET');
+        return $this->method($uri, 'GET');
+    }
+
+    protected function post(string $uri, array $params = []): ResponseInterface
+    {
+        return $this->method($uri, 'POST', $params);
     }
 
     protected function method(string $uri, $method, array $params = []): ResponseInterface
@@ -53,7 +58,6 @@ class WebTestCase extends TestCase
         $container = $this->container();
         $em = $container->get(EntityManagerInterface::class);
         $loader = new Loader();
-
         foreach ($fixtures as $class) {
             if ($container->has($class)) {
                 $fixture = $container->get($class);
@@ -62,20 +66,25 @@ class WebTestCase extends TestCase
             }
             $loader->addFixture($fixture);
         }
-
         $executor = new ORMExecutor($em, new ORMPurger($em));
         $executor->execute($loader->getFixtures());
     }
 
-    protected function app(): App
+    private function app(): App
     {
         $container = $this->container();
         $app = new App($container);
-        (require 'config/routes.php')($app);
+
+        $middleware = require 'config/middleware.php';
+        foreach ($middleware as $item) {
+            $app->add($item);
+        }
+
+        (require 'config/routes.php')($app, $container);
         return $app;
     }
 
-    protected function container(): ContainerInterface
+    private function container(): ContainerInterface
     {
         return require 'config/container.php';
     }

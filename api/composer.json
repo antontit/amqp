@@ -21,7 +21,8 @@
     "zendframework/zend-diactoros": "^2.1"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master"
+    "roave/security-advisories": "dev-master",
+    "symfony/var-dumper": "^4.2"
   },
   "scripts": {
     "app": "php bin/app.php --ansi",

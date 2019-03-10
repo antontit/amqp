@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Api\Model\User\UseCase\SingUp\Request;
+namespace Api\Model\User\UseCase\SignUp\Request;
 
 class Command
 {

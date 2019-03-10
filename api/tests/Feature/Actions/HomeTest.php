@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Test\Feature;
+namespace Test\Feature\Actions;
+
+use Test\Feature\WebTestCase;
 
 class HomeTest extends WebTestCase
 {
