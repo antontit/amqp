@@ -45,7 +45,9 @@ class Handler
             $this->hasher->hash($command->password),
             $token = $this->tokenizer->generate()
         );
+
         $this->users->add($user);
+
         $this->flusher->flush();
     }
 }
