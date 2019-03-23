@@ -24,6 +24,6 @@ class Handler
     {
         $user = $this->users->getByEmail(new Email($command->email));
         $user->confirmSignup($command->token, new \DateTimeImmutable());
-        $this->flusher->flush();
+        $this->flusher->flush($user);
     }
 }
