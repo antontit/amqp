@@ -19,8 +19,9 @@ class SingUpTest extends TestCase
             $date = new \DateTimeImmutable(),
             $email = new Email('mail@example.com'),
             $hash = 'hash',
-            $token = new ConfirmToken('token', new \DateTimeImmutable('+1 day'))
+            $token = new ConfirmToken('token', $date->modify('+1 day'))
         );
+
         self::assertTrue($user->isWait());
         self::assertFalse($user->isActive());
         self::assertEquals($id, $user->getId());

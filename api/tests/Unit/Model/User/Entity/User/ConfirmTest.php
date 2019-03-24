@@ -7,8 +7,8 @@ namespace Test\Unit\Model\User\Entity\User;
 use Api\Model\User\Entity\User\ConfirmToken;
 use Api\Model\User\Entity\User\Email;
 use Api\Model\User\Entity\User\User;
-use Api\Model\User\Entity\User\UserId;
 use PHPUnit\Framework\TestCase;
+use Test\Builder\User\UserBuilder;
 
 class ConfirmTest extends TestCase
 {
@@ -56,12 +56,11 @@ class ConfirmTest extends TestCase
 
     private function signUp(ConfirmToken $token): User
     {
-        return new User(
-            UserId::next(),
-            new \DateTimeImmutable(),
-            new Email('mail@example.com'),
-            'hash',
-            $token
-        );
+        return (new UserBuilder())
+            ->withDate(new \DateTimeImmutable())
+            ->withEmail(new Email('mail@example.com'))
+            ->withPasswordHash('hash')
+            ->withConfirmToken($token)
+            ->build();
     }
 }
