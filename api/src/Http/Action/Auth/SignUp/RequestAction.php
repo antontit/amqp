@@ -17,7 +17,7 @@ class RequestAction implements RequestHandlerInterface
 {
     /** @var Handler */
     private $handler;
-    /** @var ValidatorInterface */
+
     private $validator;
 
     public function __construct(Handler $handler, Validator $validator)

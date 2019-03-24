@@ -35,9 +35,11 @@ class Handler
     public function handle(Command $command): void
     {
         $email = new Email($command->email);
+
         if ($this->users->hasByEmail($email)) {
             throw new \DomainException('User with this email already exists.');
         }
+
         $user = new User(
             UserId::next(),
             new \DateTimeImmutable(),
