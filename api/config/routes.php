@@ -7,6 +7,7 @@ use Api\Http\Action\HomeAction;
 use Api\Http\Action\Auth\SignUp\RequestAction;
 use Api\Http\Action\Auth\SignUp\ConfirmAction;
 
+
 return function (App $app) {
 
     $app->get('/', HomeAction::class . ":handle");

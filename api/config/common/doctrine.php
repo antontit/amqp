@@ -2,6 +2,8 @@
 
 use Api\Infrastructure\Doctrine\Type\User\UserIdType;
 use Api\Infrastructure\Doctrine\Type\User\EmailType;
+use Api\Infrastructure\Doctrine\Type\OAuth\ClientType;
+use Api\Infrastructure\Doctrine\Type\OAuth\ScopesType;
 use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
@@ -38,13 +40,18 @@ return [
         'doctrine' => [
             'dev_mode' => false,
             'cache_dir' => 'var/cache/doctrine',
-            'metadata_dirs' => ['src/Model/User/Entity'],
+            'metadata_dirs' => [
+                'src/Model/User/Entity',
+                'src/Model/OAuth/Entity',
+            ],
             'connection' => [
                 'url' => getenv('API_DB_URL'),
             ],
             'types' => [
                 UserIdType::NAME => UserIdType::class,
                 EmailType::NAME => EmailType::class,
+                ClientType::NAME => ClientType::class,
+                ScopesType::NAME => ScopesType::class,
             ]
         ],
     ],
