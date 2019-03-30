@@ -34,6 +34,7 @@ class ConfirmAction implements RequestHandlerInterface
         }
 
         $this->handler->handle($command);
+
         return new JsonResponse([]);
     }
 
