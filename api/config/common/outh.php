@@ -11,7 +11,7 @@ use Psr\Container\ContainerInterface;
 return [
     Server\AuthorizationServer::class => function (ContainerInterface $container) {
 
-    $config = $container->get('config')['oauth'];
+        $config = $container->get('config')['oauth'];
 
         $clientRepository = $container->get(Server\Repositories\ClientRepositoryInterface::class);
 

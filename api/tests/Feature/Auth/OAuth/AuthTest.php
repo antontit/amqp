@@ -13,6 +13,7 @@ class AuthTest extends WebtestCase
         $this->loadFixtures([
             AuthFixture::class,
         ]);
+
         parent::setUp();
     }
 

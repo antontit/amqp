@@ -1,5 +1,5 @@
 vendor/
-.env
+/.env
 !cache
 !cache/.gitkeep
 !log
@@ -7,3 +7,5 @@ vendor/
 !mail
 !mail/.gitkeep
 !.gitignore
+/private.key
+/public.key
