@@ -31,7 +31,8 @@
                                     :state="errors.password ? false : null"
                                     required>
                             </b-form-input>
-                            <b-form-invalid-feedback id="signupPasswordError">{{ errors.password }}</b-form-invalid-feedback>
+                            <b-form-invalid-feedback id="signupPasswordError">{{ errors.password }}
+                            </b-form-invalid-feedback>
                         </b-form-group>
 
                         <b-button type="submit" variant="primary">Sign Up</b-button>
@@ -69,6 +70,9 @@
                         this.$router.push({name: 'signup.confirm'});
                     })
                     .catch(error => {
+
+                        console.log(error);
+
                         if (error.response) {
                             if (error.response.data.error) {
                                 this.error = error.response.data.error;

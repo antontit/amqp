@@ -15,7 +15,7 @@ if (file_exists('.env')) {
 $container = require 'config/container.php';
 $app = new \Slim\App($container);
 
-(require 'config/routes.php')($app);
+(require 'config/routes.php')($app, $container);
 
 $middleware = require 'config/middleware.php';
 foreach ($middleware as $item) {
