@@ -32,7 +32,8 @@
   "scripts": {
     "app": "php bin/app.php --ansi",
     "test-unit": "./vendor/bin/phpunit --color=always --configuration phpunit.xml.dist --testsuite=unit",
-    "test-feature": "./vendor/bin/phpunit --color=always --configuration phpunit.xml.dist --testsuite feature"
+    "test-feature": "./vendor/bin/phpunit --color=always --configuration phpunit.xml.dist --testsuite=feature",
+    "test-integration": "./vendor/bin/phpunit --color=always --configuration phpunit.xml.dist --testsuite=integration"
   },
   "autoload": {
     "psr-4": {
