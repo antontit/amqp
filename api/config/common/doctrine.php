@@ -1,14 +1,11 @@
 <?php
 
-use Api\Infrastructure\Doctrine\Type\User\UserIdType;
-use Api\Infrastructure\Doctrine\Type\User\EmailType;
-use Api\Infrastructure\Doctrine\Type\OAuth\ClientType;
-use Api\Infrastructure\Doctrine\Type\OAuth\ScopesType;
-use Doctrine\Common\Cache\FilesystemCache;
-use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
+use Api\Infrastructure\Doctrine\Type;
+use Doctrine\Common\Cache\FilesystemCache;
+use Doctrine\DBAL\Types\Type as DoctrineType;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityManager;
-use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Tools\Setup;
 
 return [
@@ -25,8 +22,8 @@ return [
         );
 
         foreach ($params['types'] as $type => $class) {
-            if (!Type::hasType($type)) {
-                Type::addType($type, $class);
+            if (!DoctrineType::hasType($type)) {
+                DoctrineType::addType($type, $class);
             }
         }
 
@@ -43,15 +40,18 @@ return [
             'metadata_dirs' => [
                 'src/Model/User/Entity',
                 'src/Model/OAuth/Entity',
+                'src/Model/Video/Entity',
             ],
             'connection' => [
                 'url' => getenv('API_DB_URL'),
             ],
             'types' => [
-                UserIdType::NAME => UserIdType::class,
-                EmailType::NAME => EmailType::class,
-                ClientType::NAME => ClientType::class,
-                ScopesType::NAME => ScopesType::class,
+                Type\User\UserIdType::NAME => Type\User\UserIdType::class,
+                Type\User\EmailType::NAME => Type\User\EmailType::class,
+                Type\OAuth\ClientType::NAME => Type\OAuth\ClientType::class,
+                Type\OAuth\ScopesType::NAME => Type\OAuth\ScopesType::class,
+                Type\Video\AuthorIdType::NAME => Type\Video\AuthorIdType::class,
+                Type\Video\VideoIdType::NAME => Type\Video\VideoIdType::class,
             ]
         ],
     ],

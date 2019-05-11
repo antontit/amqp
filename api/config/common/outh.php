@@ -45,11 +45,9 @@ return [
         $server->enableGrantType($grant, new \DateInterval('PT1H'));
 
         $grant = new Server\Grant\RefreshTokenGrant($refreshTokenRepository);
-//        $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
-        $grant->setRefreshTokenTTL(new \DateInterval('PT3S'));
+        $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
 
-//        $server->enableGrantType($grant, new \DateInterval('PT1H'));
-        $server->enableGrantType($grant, new \DateInterval('PT3S'));
+        $server->enableGrantType($grant, new \DateInterval('PT1H'));
 
         return $server;
     },
