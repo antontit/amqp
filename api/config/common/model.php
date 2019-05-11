@@ -53,6 +53,12 @@ return [
         );
     },
 
+    Api\ReadModel\User\UserReadRepository::class => function (ContainerInterface $container) {
+        return new Api\Infrastructure\ReadModel\User\DoctrineUserReadRepository(
+            $container->get(\Doctrine\ORM\EntityManagerInterface::class)
+        );
+    },
+
     'config' => [
         'auth' => [
             'signup_confirm_interval' => 'PT5M',

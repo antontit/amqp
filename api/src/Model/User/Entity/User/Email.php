@@ -23,6 +23,4 @@ class Email
     {
         return $this->email;
     }
-
-
 }

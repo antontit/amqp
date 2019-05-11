@@ -35,6 +35,7 @@ class ShowTest extends WebTestCase
 
         self::assertEquals([
             'id' => $fixture->getUser()->getId()->getId(),
+            'email' => $fixture->getUser()->getEmail()->getEmail(),
         ], $data);
     }
 

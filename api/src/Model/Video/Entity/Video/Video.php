@@ -64,7 +64,6 @@ class Video implements AggregateRoot
     private $thumbnail;
 
     /**
-     * @ORM\OrderBy(height
      * @var ArrayCollection|File[]
      * @ORM\OneToMany(targetEntity="File", mappedBy="video", orphanRemoval=true, cascade={"persist"})
      * @ORM\OrderBy({"size.height" = "ASC"})
