@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Api\Infrastructure\Model\Video\Service\Processor\Uploader;
+namespace Api\Infrastructure\Model\Video\Service\Uploader;
 
 use Api\Model\Video\Service\Uploader;
 use Psr\Http\Message\UploadedFileInterface;
