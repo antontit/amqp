@@ -55,4 +55,17 @@ return [
             $container->get(ReadModel\User\UserReadRepository::class)
         );
     },
+
+    Action\Author\CreateAction::class => function (ContainerInterface $container) {
+        return new Action\Author\CreateAction(
+            $container->get(Api\Model\Video\UseCase\Author\Create\Handler::class),
+            $container->get(Validator::class)
+        );
+    },
+
+    Action\Author\ShowAction::class => function (ContainerInterface $container) {
+        return new Action\Author\ShowAction(
+            $container->get(ReadModel\Video\AuthorReadRepository::class)
+        );
+    },
 ];

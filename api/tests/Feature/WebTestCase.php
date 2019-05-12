@@ -64,16 +64,20 @@ class WebTestCase extends TestCase
     {
         $container = $this->container();
         $em = $container->get(EntityManagerInterface::class);
+
         $loader = new Loader();
+
         foreach ($fixtures as $name => $class) {
             if ($container->has($class)) {
                 $fixture = $container->get($class);
             } else {
                 $fixture = new $class;
             }
+
             $loader->addFixture($fixture);
             $this->fixtures[$name] = $fixture;
         }
+
         $executor = new ORMExecutor($em, new ORMPurger($em));
         $executor->execute($loader->getFixtures());
     }
@@ -83,6 +87,7 @@ class WebTestCase extends TestCase
         if (!array_key_exists($name, $this->fixtures)) {
             throw new \InvalidArgumentException('Undefined fixture ' . $name);
         }
+
         return $this->fixtures[$name];
     }
 

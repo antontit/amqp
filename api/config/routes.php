@@ -3,24 +3,27 @@
 declare(strict_types=1);
 
 use Slim\App;
-use Api\Http\Action\HomeAction;
-use Api\Http\Action\Auth\SignUp\RequestAction;
-use Api\Http\Action\Auth\SignUp\ConfirmAction;
+use Api\Http\Action;
 use League\OAuth2\Server\Middleware\ResourceServerMiddleware;
 
 
 return function (App $app, \Psr\Container\ContainerInterface $container) {
 
-    $app->get('/', HomeAction::class . ":handle");
+    $app->get('/', Action\HomeAction::class . ":handle");
 
-    $app->post('/auth/signup', RequestAction::class . ":handle");
-    $app->post('/auth/signup/confirm', ConfirmAction::class . ':handle');
+    $app->post('/auth/signup', Action\Auth\SignUp\RequestAction::class . ":handle");
+    $app->post('/auth/signup/confirm', Action\Auth\SignUp\ConfirmAction::class . ':handle');
 
-    $app->post('/oauth/auth', \Api\Http\Action\Auth\OAuthAction::class . ':handle');
+    $app->post('/oauth/auth', Action\Auth\OAuthAction::class . ':handle');
 
     $auth = $container->get(ResourceServerMiddleware::class);
 
     $app->group('/profile', function () {
-        $this->get('', \Api\Http\Action\Profile\ShowAction::class . ':handle');
+        $this->get('', Action\Profile\ShowAction::class . ':handle');
+    })->add($auth);
+
+    $app->group('/author', function () {
+        $this->get('', Action\Author\ShowAction::class . ':handle');
+        $this->post('/create', Action\Author\CreateAction::class . ':handle');
     })->add($auth);
 };
