@@ -25,5 +25,6 @@ return function (App $app, \Psr\Container\ContainerInterface $container) {
     $app->group('/author', function () {
         $this->get('', Action\Author\ShowAction::class . ':handle');
         $this->post('/create', Action\Author\CreateAction::class . ':handle');
+        $this->post('/video/create', Action\Author\Video\CreateAction::class . ':handle');
     })->add($auth);
 };
