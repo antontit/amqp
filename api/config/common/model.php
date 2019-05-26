@@ -76,6 +76,12 @@ return [
         );
     },
 
+    ReadModel\Video\VideoReadRepository::class => function (ContainerInterface $container) {
+        return new ReadModelInfrastructure\Video\DoctrineVideoReadRepository(
+            $container->get(\Doctrine\ORM\EntityManagerInterface::class)
+        );
+    },
+
     VideoModel\Entity\Author\AuthorRepository::class => function (ContainerInterface $container) {
         return new VideoInfrastructure\Entity\DoctrineAuthorRepository(
             $container->get(\Doctrine\ORM\EntityManagerInterface::class)

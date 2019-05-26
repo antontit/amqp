@@ -58,9 +58,16 @@ return [
         return $preferences;
     },
 
+    \Api\Http\VideoUrl::class => function (ContainerInterface $container) {
+        return new \Api\Http\VideoUrl(
+            $container->get('config')['video']['base_url']
+        );
+    },
+
     'config' => [
         'video' => [
             'upload_path' => dirname(__DIR__, 3) . '/storage/public/video',
+            'base_url' => getenv('API_STORAGE_URL'),
             'sizes' => [
                 [640, 360],
                 [854, 480],
