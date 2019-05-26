@@ -14,11 +14,6 @@ export default new Router({
             component: Home
         },
         {
-            path: '/about',
-            name: 'about',
-            component: () => import('./views/About.vue')
-        },
-        {
             path: '/login',
             name: 'login',
             component: () => import('./views/Login.vue')
@@ -32,6 +27,26 @@ export default new Router({
             path: '/signup/confirm',
             name: 'signup.confirm',
             component: () => import('./views/SignUp/Confirm.vue')
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: () => import('./views/Profile/Show.vue')
+        },
+        {
+            path: '/author',
+            name: 'author',
+            component: () => import('./views/Author/Show.vue')
+        },
+        {
+            path: '/author/create',
+            name: 'author.create',
+            component: () => import('./views/Author/Create.vue')
+        },
+        {
+            path: '/author/upload',
+            name: 'author.upload',
+            component: () => import('./views/Author/Video/Upload.vue')
         }
     ]
 })
