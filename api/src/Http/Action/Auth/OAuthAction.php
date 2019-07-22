@@ -26,7 +26,6 @@ class OAuthAction implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-
             return $this->server->respondToAccessTokenRequest($request, new Response());
 
         } catch (OAuthServerException $exception) {

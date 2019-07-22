@@ -18,6 +18,7 @@ $app = new \Slim\App($container);
 (require 'config/routes.php')($app, $container);
 
 $middleware = require 'config/middleware.php';
+
 foreach ($middleware as $item) {
     $app->add($item);
 }

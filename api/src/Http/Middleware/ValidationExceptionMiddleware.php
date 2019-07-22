@@ -16,7 +16,7 @@ class ValidationExceptionMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         try {
-
+            
             return $handler->handle($request);
 
         } catch (ValidationException $e) {

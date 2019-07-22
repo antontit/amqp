@@ -6,7 +6,6 @@ use Slim\App;
 use Api\Http\Action;
 use League\OAuth2\Server\Middleware\ResourceServerMiddleware;
 
-
 return function (App $app, \Psr\Container\ContainerInterface $container) {
 
     $app->get('/', Action\HomeAction::class . ":handle");

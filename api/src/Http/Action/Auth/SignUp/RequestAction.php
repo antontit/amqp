@@ -28,6 +28,7 @@ class RequestAction implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        dd('test');
         $command = $this->deserialize($request);
 
         if ($errors = $this->validator->validate($command)) {

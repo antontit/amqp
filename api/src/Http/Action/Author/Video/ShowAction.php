@@ -41,6 +41,7 @@ class ShowAction implements RequestHandlerInterface
 
     private function serialize(Video $video): array
     {
+
         return [
             'id' => $video->getId()->getId(),
             'name' => $video->getName(),

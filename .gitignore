@@ -1,3 +1,4 @@
 xxx
 .idea
 .phpunit.result*
+*.log

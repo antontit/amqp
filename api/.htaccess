@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteRule storage\/(.*) storage/$1 [L]
+RewriteRule ^(.*)$ public/$1 [L]
