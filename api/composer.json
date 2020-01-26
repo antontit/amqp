@@ -1,0 +1,48 @@
+{
+  "config": {
+    "sort-packages": true
+  },
+  "require": {
+    "php": ">=7.1.0",
+    "ext-json": "^1.5",
+    "bnf/slim3-psr15": "^1.0",
+    "doctrine/data-fixtures": "^1.3",
+    "doctrine/migrations": "^2.0",
+    "doctrine/orm": "^2.6",
+    "geekdevs/swift-mailer-extensions": "^2.0",
+    "league/oauth2-server": "^7.3",
+    "monolog/monolog": "^1.24",
+    "phpunit/phpunit": "^8",
+    "psr/http-server-handler": "^1.0",
+    "psr/http-server-middleware": "^1.0",
+    "ramsey/uuid": "^3.8",
+    "slim/slim": "^3.12",
+    "swiftmailer/swiftmailer": "^6.2",
+    "symfony/console": "^4.2",
+    "symfony/dotenv": "^4.2",
+    "symfony/validator": "^4.2",
+    "webmozart/assert": "^1.4",
+    "zendframework/zend-config-aggregator": "^1.1",
+    "zendframework/zend-diactoros": "^2.1"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "symfony/var-dumper": "^4.2"
+  },
+  "scripts": {
+    "app": "php bin/app.php --ansi",
+    "test-unit": "./vendor/bin/phpunit --color=always --configuration phpunit.xml.dist --testsuite=unit",
+    "test-feature": "./vendor/bin/phpunit --color=always --configuration phpunit.xml.dist --testsuite=feature",
+    "test-integration": "./vendor/bin/phpunit --color=always --configuration phpunit.xml.dist --testsuite=integration"
+  },
+  "autoload": {
+    "psr-4": {
+      "Api\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Test\\": "tests/"
+    }
+  }
+}

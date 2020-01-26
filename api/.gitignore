@@ -1,0 +1,11 @@
+vendor/
+/.env
+!cache
+!cache/.gitkeep
+!log
+!log/.gitkeep
+!mail
+!mail/.gitkeep
+!.gitignore
+/private.key
+/public.key
