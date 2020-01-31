@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Doctrine\Migrations\Tools\Console\Helper\ConfigurationHelper;
+use Doctrine\DBAL\Migrations\Tools\Console\Helper\ConfigurationHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Symfony\Component\Dotenv\Dotenv;
@@ -26,7 +26,7 @@ $cli = new Application('Application console');
 $entityManager = $container->get(EntityManagerInterface::class);
 $connection = $entityManager->getConnection();
 
-$configuration = new \Doctrine\Migrations\Configuration\Configuration($connection);
+$configuration = new \Doctrine\DBAL\Migrations\Configuration\Configuration($connection);
 $configuration->setMigrationsDirectory('src/Data/Migration');
 $configuration->setMigrationsNamespace('Api\Data\Migration');
 
@@ -35,7 +35,7 @@ $cli->getHelperSet()->set(new EntityManagerHelper($entityManager), 'em');
 $cli->getHelperSet()->set(new ConfigurationHelper($connection, $configuration), 'configuration');
 
 \Doctrine\ORM\Tools\Console\ConsoleRunner::addCommands($cli);
-\Doctrine\Migrations\Tools\Console\ConsoleRunner::addCommands($cli);
+\Doctrine\DBAL\Migrations\Tools\Console\ConsoleRunner::addCommands($cli);
 
 
 $commands = $container->get('config')['console']['commands'];

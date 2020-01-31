@@ -66,7 +66,7 @@ return [
 
     'config' => [
         'video' => [
-            'upload_path' => dirname(__DIR__, 2) . '/storage/public/video',
+            'upload_path' => dirname(__DIR__, 3) . '/storage/public/video',
             'base_url' => getenv('API_STORAGE_URL'),
             'sizes' => [
                 [640, 360],

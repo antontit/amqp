@@ -6,13 +6,11 @@
     "php": ">=7.1.0",
     "ext-json": "^1.5",
     "bnf/slim3-psr15": "^1.0",
-    "doctrine/data-fixtures": "^1.3",
-    "doctrine/migrations": "^2.0",
+    "doctrine/migrations": "^1.8",
     "doctrine/orm": "^2.6",
     "geekdevs/swift-mailer-extensions": "^2.0",
     "league/oauth2-server": "^7.3",
     "monolog/monolog": "^1.24",
-    "phpunit/phpunit": "^8",
     "psr/http-server-handler": "^1.0",
     "psr/http-server-middleware": "^1.0",
     "ramsey/uuid": "^3.8",
@@ -27,6 +25,8 @@
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
+    "phpunit/phpunit": "^7.4",
+    "doctrine/data-fixtures": "^1.3",
     "symfony/var-dumper": "^4.2"
   },
   "scripts": {
