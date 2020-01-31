@@ -11,7 +11,7 @@ docker-up:
 
 api-permissions:
 	sudo chmod 777 api/var
-	sudo chmod 777 api/var/cache
+	sudo chmod 777 api/var/cache/*
 	sudo chmod 777 api/var/log
 	sudo chmod 777 api/var/mail
 

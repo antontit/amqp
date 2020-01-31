@@ -35,12 +35,6 @@ return [
         return new UserInfrastructure\Service\RandConfirmTokenizer(new \DateInterval($interval));
     },
 
-    UserModel\Entity\User\UserRepository::class => function (ContainerInterface $container) {
-        return new UserInfrastructure\Entity\DoctrineUserRepository(
-            $container->get(\Doctrine\ORM\EntityManagerInterface::class)
-        );
-    },
-
     UserModel\UseCase\SignUp\Request\Handler::class => function (ContainerInterface $container) {
         return new UserModel\UseCase\SignUp\Request\Handler(
             $container->get(UserModel\Entity\User\UserRepository::class),
