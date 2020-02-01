@@ -1,4 +1,3 @@
-xxx
-.idea
+.idea/*
 .phpunit.result*
 *.log
