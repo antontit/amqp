@@ -7,11 +7,12 @@ namespace Api\Infrastructure\ReadModel\User;
 use Api\Model\User\Entity\User\User;
 use Api\ReadModel\User\UserReadRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 class DoctrineUserReadRepository implements UserReadRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityRepository
+     * @var EntityRepository
      */
     private $repo;
     private $em;
