@@ -10,6 +10,7 @@ services:
       - api-php-fpm
     ports:
       - "8080:80"
+
   frontend-nodejs:
     image: node:10.11-jessie
     volumes:
@@ -25,6 +26,7 @@ services:
       - ./api:/var/www/api
     ports:
       - "8081:80"
+
   api-php-fpm:
     build:
       context: ./api/docker
@@ -36,6 +38,7 @@ services:
       - api-postgres
       - mailer
       - kafka
+
   api-php-cli:
     build:
       context: ./api/docker
@@ -49,6 +52,7 @@ services:
       - kafka
     working_dir: /var/www/api
     tty: true
+
   api-postgres:
     image: postgres:9.6-alpine
     volumes:
@@ -91,3 +95,12 @@ services:
       - ./storage:/var/www/storage
     ports:
       - "8083:80"
+
+  websocket-nodejs:
+    image: node:10.11-jessie
+    volumes:
+      - ./websocket:/var/www/websocket
+    ports:
+      - "8084:8000"
+    working_dir: /var/www/websocket
+    tty: true
