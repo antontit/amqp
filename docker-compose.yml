@@ -26,6 +26,8 @@ services:
       - ./api:/var/www/api
     ports:
       - "8081:80"
+    links:
+      - api-php-fpm
 
   api-php-fpm:
     build:

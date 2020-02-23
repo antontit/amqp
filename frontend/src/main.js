@@ -5,11 +5,11 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 
-let user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(localStorage.getItem('user'));
 
 if (user) {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
@@ -44,10 +44,18 @@ axios.interceptors.response.use(null, error => {
         });
 });
 
-let socket = new WebSocket(process.env.VUE_APP_WS_URL);
+const socket = new WebSocket(process.env.VUE_APP_WS_URL);
 
 socket.onopen = function() {
+
     alert('Connected');
+
+    if (user) {
+        socket.send(JSON.stringify({
+            type: 'auth',
+            token: user.access_token
+        }));
+    }
 };
 
 socket.onmessage = function(event) {
