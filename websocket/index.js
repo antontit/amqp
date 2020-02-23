@@ -2,6 +2,7 @@ const WebSocket = require('ws');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const kafka = require('kafka-node');
 
 dotenv.load();
 
@@ -14,8 +15,6 @@ server.on('connection', function (ws, request) {
 
     ws.on('message', function (message) {
 
-        console.log('received: %s', message);
-
         const data = JSON.parse(message);
 
         if (data.type && data.type === 'auth') {
@@ -27,5 +26,24 @@ server.on('connection', function (ws, request) {
                 console.log(err);
             }
         }
+
+
+        const client = new kafka.KafkaClient({
+            kafkaHost: process.env.WS_KAFKA_BROKER_LIST
+        });
+
+        const consumer = new kafka.Consumer(
+            client,
+            [
+                {topic: 'notifications', partition: 0}
+            ], {
+                groupId: 'websocket'
+            }
+        );
+
+        consumer.on('message', function (message) {
+            console.log(message);
+        });
+
     });
 });
