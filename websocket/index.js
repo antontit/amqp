@@ -42,7 +42,9 @@ server.on('connection', function (ws, request) {
         );
 
         consumer.on('message', function (message) {
-            console.log(message);
+            console.log('consumed: %s', message.value);
+            const value = JSON.parse(message.value);
+            server.clients.forEach(ws => { if (ws.user_id === value.user_id) ws.send(message.value) })
         });
 
     });

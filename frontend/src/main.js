@@ -60,6 +60,11 @@ socket.onopen = function() {
 
 socket.onmessage = function(event) {
     alert('Received: ' + event.data);
+    const data = JSON.parse(event.data);
+    console.log(data);
+    if (data.type === 'notification') {
+        alert(data.message);
+    }
 };
 
 Vue.use(BootstrapVue);

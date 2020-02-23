@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Api\Console\Command\Kafka;
 
-use Kafka\Consumer;
-use Kafka\ConsumerConfig;
+use Kafka\Producer;
+use Kafka\ProducerConfig;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 
 
 class ProduceCommand extends Command
@@ -29,26 +30,36 @@ class ProduceCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('kafka:demo:consume');
+        $this
+            ->setName('kafka:demo:produce')
+            ->addArgument('user_id', InputArgument::REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $output->writeln('<comment>Consume messages</comment>');
+        $output->writeln('<comment>Produce message</comment>');
 
-        $config = ConsumerConfig::getInstance();
+        $config = ProducerConfig::getInstance();
         $config->setMetadataRefreshIntervalMs(10000);
         $config->setMetadataBrokerList($this->brokers);
         $config->setBrokerVersion('1.1.0');
-        $config->setGroupId('demo');
-        $config->setTopics(['notifications']);
+        $config->setRequiredAck(1);
+        $config->setIsAsyn(false);
 
-        $consumer = new Consumer();
-        $consumer->setLogger($this->logger);
+        $producer = new Producer();
+        $producer->setLogger($this->logger);
 
-        $consumer->start(function($topic, $part, $message) use ($output) {
-            $output->writeln(print_r($message, true));
-        });
+        $producer->send([
+            [
+                'topic' => 'notifications',
+                'value' => json_encode([
+                    'type' => 'notification',
+                    'user_id' => $input->getArgument('user_id'),
+                    'message' => 'Hello!',
+                ]),
+                'key' => '',
+            ],
+        ]);
 
         $output->writeln('<info>Done!</info>');
     }

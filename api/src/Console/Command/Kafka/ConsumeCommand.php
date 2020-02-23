@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Api\Console\Command\Kafka;
 
-use Kafka\Producer;
-use Kafka\ProducerConfig;
+use Kafka\Consumer;
+use Kafka\ConsumerConfig;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,30 +29,26 @@ class ConsumeCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('kafka:demo:produce');
+        $this->setName('kafka:demo:consume');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $output->writeln('<comment>Produce message</comment>');
+        $output->writeln('<comment>Consume messages</comment>');
 
-        $config = ProducerConfig::getInstance();
+        $config = ConsumerConfig::getInstance();
         $config->setMetadataRefreshIntervalMs(10000);
         $config->setMetadataBrokerList($this->brokers);
         $config->setBrokerVersion('1.1.0');
-        $config->setRequiredAck(1);
-        $config->setIsAsyn(false);
+        $config->setGroupId('demo');
+        $config->setTopics(['notifications']);
 
-        $producer = new Producer();
-        $producer->setLogger($this->logger);
+        $consumer = new Consumer();
+        $consumer->setLogger($this->logger);
 
-        $producer->send([
-            [
-                'topic' => 'notifications',
-                'value' => 'Hello!',
-                'key' => '',
-            ],
-        ]);
+        $consumer->start(function($topic, $part, $message) use ($output) {
+            $output->writeln(print_r($message, true));
+        });
 
         $output->writeln('<info>Done!</info>');
     }
