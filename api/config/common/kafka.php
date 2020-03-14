@@ -2,10 +2,18 @@
 
 use Psr\Container\ContainerInterface;
 use Kafka\ProducerConfig;
+use Kafka\Producer;
 use Kafka\ConsumerConfig;
-
+use Psr\Log\LoggerInterface;
 
 return [
+
+    Producer::class => function(ContainerInterface $container) {
+        $container->get(ProducerConfig::class);
+        $producer = new Producer();
+        $producer->setLogger($container->get(LoggerInterface::class));
+        return $producer;
+    },
 
     ProducerConfig::class => function(ContainerInterface $container) {
         $params = $container->get('config')['kafka'];
