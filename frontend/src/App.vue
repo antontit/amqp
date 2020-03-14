@@ -6,6 +6,7 @@
 
     <div class="app-content">
       <main class="container">
+        <Notifications/>
         <router-view/>
       </main>
     </div>
